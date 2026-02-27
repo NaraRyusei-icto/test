@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#042154"/>
+  <path d="M256 80 L408 168 L408 344 L256 432 L104 344 L104 168 Z"
+        fill="none" stroke="#C6A75E" stroke-width="24"/>
+  <path d="M256 140 L360 198 L360 314 L256 372 L152 314 L152 198 Z"
+        fill="#C6A75E" opacity="0.2"/>
+  <text x="256" y="300" text-anchor="middle"
+        font-family="Arial, sans-serif" font-size="140" font-weight="700"
+        fill="#C6A75E" letter-spacing="-6">CN</text>
+</svg>

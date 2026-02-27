@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Crew Nest — デモモック</title>
+  <!-- ─── PWA ─── -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#042154">
+  <!-- iOS Safari 向け -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Crew Nest">
+  <link rel="apple-touch-icon" href="icon.svg">
 <style>
 /* ===== CSS 変数 ===== */
 :root {
@@ -2245,5 +2253,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 <div id="toast" class="toast"></div>
+  <!-- Service Worker 登録 -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((reg) => console.info('[PWA] SW registered, scope:', reg.scope))
+          .catch((err) => console.warn('[PWA] SW registration failed:', err));
+      });
+    }
+  </script>
 </body>
 </html>

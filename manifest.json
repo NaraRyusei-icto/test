@@ -1,0 +1,26 @@
+{
+  "name": "Crew Nest",
+  "short_name": "Crew Nest",
+  "description": "社内ポータル — クエスト & ポイント管理",
+  "start_url": "./complete-mock.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#042154",
+  "theme_color": "#042154",
+  "orientation": "portrait-primary",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
