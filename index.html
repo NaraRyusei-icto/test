@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Crew Nest — デモモック</title>
 <style>
 /* ===== CSS 変数 ===== */
@@ -61,6 +61,13 @@ body {
   color: var(--color-text);
   font-size: 14px;
   line-height: 1.5;
+  /* ダブルタップ拡大・テキスト自動拡大を無効化 */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+/* タップ操作でダブルタップ拡大が起きないようにする */
+button, a, [onclick], input, select, textarea {
+  touch-action: manipulation;
 }
 button { cursor: pointer; font-family: inherit; font-size: inherit; }
 input, textarea { font-family: inherit; font-size: inherit; }
@@ -424,49 +431,75 @@ a { text-decoration: none; color: inherit; }
   bottom: 0;
   left: 0;
   right: 0;
-  height: var(--bottom-nav-h);
   background: var(--color-bg-light);
   border-top: 1px solid var(--color-border);
   z-index: 50;
+  /* iPhone ホームバー対応 */
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 .bottom-nav-inner {
   display: flex;
-  height: 100%;
-  align-items: center;
+  width: 100%;
+  height: var(--bottom-nav-h);
+  align-items: stretch;
 }
 .bottom-nav-item {
-  flex: 1;
+  flex: 1 0 0;          /* 均等分割を強制 */
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  padding: 8px 4px;
+  gap: 4px;
+  padding: 6px 4px 8px;
   color: var(--color-subtle-light);
   cursor: pointer;
   background: none;
   border: none;
   transition: color 0.15s;
   position: relative;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
 }
 .bottom-nav-item.active { color: var(--color-primary); }
+/* アクティブ時のピルインジケータ */
+.bottom-nav-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 32px;
+  border-radius: 100px;
+  transition: background 0.15s;
+}
+.bottom-nav-item.active .bottom-nav-icon-wrap {
+  background: rgba(4, 33, 84, 0.08);
+}
 .bottom-nav-item svg { flex-shrink: 0; }
-.bottom-nav-label { font-size: 10px; font-weight: 500; }
+.bottom-nav-label {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+}
+.bottom-nav-item.active .bottom-nav-label {
+  font-weight: 700;
+}
 .bottom-nav-badge {
   position: absolute;
-  top: 6px;
-  right: calc(50% - 18px);
-  background: #ef4444;
-  color: #fff;
+  top: 4px;
+  right: calc(50% - 22px);
+  background: var(--color-accent);
+  color: var(--color-primary);
   font-size: 9px;
   font-weight: 700;
-  min-width: 15px;
-  height: 15px;
+  min-width: 16px;
+  height: 16px;
   border-radius: 9999px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 3px;
+  padding: 0 4px;
+  border: 1.5px solid var(--color-bg-light);
 }
 
 /* ===== ページ: ホーム ===== */
@@ -1179,8 +1212,8 @@ a { text-decoration: none; color: inherit; }
       <div class="nav-section-label">クエスト</div>
       <button class="nav-item" id="nav-quests" onclick="showPage('quests', this)">
         <span class="nav-item-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/>
           </svg>
         </span>
         <span class="nav-item-label">クエスト一覧</span>
@@ -1381,29 +1414,37 @@ a { text-decoration: none; color: inherit; }
   <nav class="bottom-nav">
     <div class="bottom-nav-inner">
       <button class="bottom-nav-item active" id="bnav-home" onclick="showPage('home', this)">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-        </svg>
+        <span class="bottom-nav-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+          </svg>
+        </span>
         <span class="bottom-nav-label">ホーム</span>
       </button>
       <button class="bottom-nav-item" id="bnav-quests" onclick="showPage('quests', this)">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-        </svg>
+        <span class="bottom-nav-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/>
+          </svg>
+        </span>
         <span class="bottom-nav-label">クエスト</span>
       </button>
       <button class="bottom-nav-item" id="bnav-achievements" onclick="showPage('achievements', this)">
         <span class="bottom-nav-badge" id="bnav-approval-badge">1</span>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
-        </svg>
+        <span class="bottom-nav-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13zm-3 8l-2-2 1.4-1.4.6.6 2.6-2.6 1.4 1.4-4 4z"/>
+          </svg>
+        </span>
         <span class="bottom-nav-label">申告管理</span>
       </button>
       <button class="bottom-nav-item" id="bnav-notifications" onclick="showPage('notifications', this)">
         <span class="bottom-nav-badge" id="bnav-notif-badge">1</span>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/>
-        </svg>
+        <span class="bottom-nav-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+          </svg>
+        </span>
         <span class="bottom-nav-label">通知</span>
       </button>
     </div>
