@@ -2,7 +2,7 @@
   "name": "Crew Nest",
   "short_name": "Crew Nest",
   "description": "社内ポータル — クエスト & ポイント管理",
-  "start_url": "./complete-mock.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#042154",

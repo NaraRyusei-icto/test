@@ -1,8 +1,8 @@
 // mockup/sw.js — Crew Nest Mock Service Worker
-const CACHE_NAME = 'crew-nest-mock-v1';
+const CACHE_NAME = 'crew-nest-mock-v2';
 
 const PRECACHE_ASSETS = [
-  './complete-mock.html',
+  './index.html',
   './manifest.json',
   './icon.svg',
 ];
